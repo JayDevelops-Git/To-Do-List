@@ -1,0 +1,139 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box ;
+}
+
+body {
+
+    background-image: url(./assets/background/layered-waves-haikei.svg);
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: "DM Sans", sans-serif;
+    color: var(--text-color);
+}
+
+:root{    
+    --primary-color: #18122B;
+    --secondary-color: #393053;
+    --text-color: #FFFFFF;
+    --accent-color: #635985;
+    --hover-color: #443C68;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 5vh;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5vh;
+}
+
+.add-todo {
+    display: inline;
+    float: left;
+}
+
+.todo-input {
+    padding: 0.5rem;
+    display: flex;
+    float: left;
+    
+}
+
+.todo-button {
+    color: var(--text-color);
+    background: var(--accent-color);
+    padding: 0.6rem;
+}
+
+.todo-button:hover {
+    background: var(--hover-color);
+    transition: 0.2s;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+.select {
+    margin: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+select {
+    color: var(--primary-color);
+    width: 10rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.select::after {
+    content: "\21B2";
+    position: absolute;
+    background: var(--accent-color);
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    pointer-events: none;
+}
+
+.select:hover::after {
+    background: var(--hover-color);
+}
+
+.todo-list {
+    list-style-type: none;
+}
+
+
+/* JS Classes */
+
+.todo {
+    display: flex;
+    background: var(--secondary-color) ;
+    font-size: 1.2vw;
+    margin: 1vh 1vw;
+
+    justify-content: space-between;
+}
+
+.fa-trash, .fa-circle {
+    pointer-events: none;
+}
+
+.complete-btn, .bin-btn {
+    padding: 0.5rem;
+    color: var(--text-color);
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.5;
+    transition: all 0.5s ease;
+}
+
+.slide-out {
+    transform: translateX(100vw);
+    transition: all 0.5s ease;
+}
