@@ -130,6 +130,11 @@ select {
     min-width: 10rem;
 
     justify-content: space-between;
+    transition: 0.3s;
+}
+
+.todo:hover {
+    transform: scale(1.1);
 }
 
 .todo-main-container {
