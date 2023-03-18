@@ -64,7 +64,7 @@ function addTodo(event) {
         todoDiv.appendChild(dueContainer)
 
         // Add todo to local storage
-        saveLocalTodos(todoInput.value);
+        saveLocalTodos(todoInput.value, "uncomplete", null);
 
         // Append to todo list
         todoList.appendChild(todoDiv);
@@ -72,9 +72,11 @@ function addTodo(event) {
     }
 }
 
+// Functions of the delete and complete buttons
 function deleteCheck(e) {
     //console.log(e.target);
     const item = e.target;
+    // Bin button functionality
     if (item.classList[0] === 'bin-btn') {
         const todo = item.parentElement.parentElement;
         
@@ -85,17 +87,18 @@ function deleteCheck(e) {
         });
     }
 
+    //Complete button functionality
     if (item.classList[0] === "complete-btn") {
         const todo = item.parentElement;
         todo.classList.toggle("completed");
 
         if (todo.classList.contains("completed")) {
-            console.log("completed");
             item.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
+            updateLocalTodo(todo.childNodes[1].innerText,"completed");
         }
         else {
-            console.log("uncompleted");
             item.innerHTML = '<i class="fa-regular fa-circle"></i>';
+            updateLocalTodo(todo.childNodes[1].innerText,"uncompleted");
         }
         
     }
@@ -129,7 +132,7 @@ function filterTodo(e) {
     }) 
 }
 
-function saveLocalTodos(todo) {
+function saveLocalTodos(todo, isComplete, dateDue) {
     let todos;
     if(localStorage.getItem('todos') === null) {
         todos = [];
@@ -137,8 +140,33 @@ function saveLocalTodos(todo) {
     else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-    todos.push(todo);
+    todos.push([todo, isComplete, dateDue]);
     localStorage.setItem('todos', JSON.stringify(todos));
+}
+
+// Uses the todo text to find the index of a todo in local storage
+function findTodoIndex(todoText) {
+    localTodos = JSON.parse(localStorage.getItem('todos'));
+
+    for (var i=0; i <= localTodos.length -1; i++) {
+        if (localTodos[i][0] == todoText) {
+            console.log(i);
+            return i
+        }
+    }
+}
+
+// Updates the todos array in local storage to state whether a today is completed
+function updateLocalTodo(todoText, isComplete) {
+    todos = JSON.parse(localStorage.getItem('todos'));
+
+    index = findTodoIndex(todoText);
+    //Object.assign([], todos, {index: [todoText, isComplete, null]});
+    todos[index][1] = isComplete;
+    console.log(todos);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    console.log(localTodos[index][1]);
+
 }
 
 function getTodos() {
@@ -150,12 +178,17 @@ function getTodos() {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
     todos.forEach(function(todo) {
+        console.log(todo);
         // Todo div
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo');
-        //Create main todo container
+        // Create main todo container
         const todoMainContainer = document.createElement('div');
         todoMainContainer.classList.add("todo-main-container");
+        //Retrieves information from todos to apply the completed class if necessary
+        if (todo[1] != "uncompleted") {
+            todoMainContainer.classList.toggle("completed");
+        }
         // Checkmark button
         const completedButton = document.createElement('button');
         completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
@@ -163,7 +196,7 @@ function getTodos() {
         todoMainContainer.appendChild(completedButton);
         // Create li
         const newTodo = document.createElement('li');
-        newTodo.innerText = todo;
+        newTodo.innerText = todo[0];
         newTodo.classList.add('todo-item');
         todoMainContainer.appendChild(newTodo);
         // Bin button
@@ -190,6 +223,9 @@ function getTodos() {
         // Append to todo list
         todoList.appendChild(todoDiv);
         todoInput.value = "";
+
+
+
     });
 }
 
@@ -202,8 +238,10 @@ function removeLocalTodos(todo) {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
 
-    const todoIndex = todo.children[0].innerText;
-    todos.splice(todos.indexOf(todoIndex), 1)
+    const todoIndex = (todo.children[0].innerText -1);
+    console.log(todoIndex);
+    console.log(todos);
+    todos.splice(todoIndex, 1)
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -214,10 +252,5 @@ function deleteAll() {
     while (todos.lastElementChild) {
         todos.removeChild(todos.lastElementChild)
     }
-    removeAllLocalTodos(); 
-}
-
-function removeAllLocalTodos() {
     localStorage.removeItem('todos');
 }
-
