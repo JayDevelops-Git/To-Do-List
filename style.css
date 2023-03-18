@@ -163,13 +163,38 @@ select {
 }
 
 .due-btn {
-    padding-left: 0.5rem;
-    color: var(--text-color);
+    margin-left: 0.5rem;
+    color: #BAB7C3;
+    font-size: 1.5rem;;
 }
 
 .due-btn:hover {
-    color: var(--text-hover-color);
+    color: var(--text-color);
 }
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+  
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+  
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.due-btn:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
 
 .completed {
     text-decoration: line-through;

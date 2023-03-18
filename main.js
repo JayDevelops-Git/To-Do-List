@@ -59,7 +59,7 @@ function addTodo(event) {
         dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
         // Due confirm
         const dueButton = document.createElement('button');
-        dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>'
+        dueButton.innerHTML = '<i class="fa-regular fa-square-check" title="click me"></i>'
         dueButton.classList.add("due-btn");
         dueContainer.appendChild(dueButton);
         //Add due container to todoDiv
@@ -234,7 +234,7 @@ function getTodos() {
         
         // Due confirm
         const dueButton = document.createElement('button');
-        dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>'
+        dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>';
         dueButton.classList.add("due-btn");
         dueContainer.appendChild(dueButton);
         //Add due container to todoDiv
