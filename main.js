@@ -25,37 +25,51 @@ function addTodo(event) {
     const todoDiv = document.createElement('div');
     todoDiv.classList.add('todo');
 
-    //Checkmark button
+    //Create label container
+    const labelContainer = document.createElement('div');
+    labelContainer.classList.add("label-container");
+
+    // Checkmark button
     const completedButton = document.createElement('button');
     completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
     completedButton.classList.add("complete-btn");
-    todoDiv.appendChild(completedButton);
+    labelContainer.appendChild(completedButton);
 
-    //Create li
+    // Create li
     const newTodo = document.createElement('li');
     newTodo.innerText = todoInput.value;
     newTodo.classList.add('todo-item');
-    todoDiv.appendChild(newTodo);
+    labelContainer.appendChild(newTodo);
 
-    //Add todo to local storage
+    // Bin button
+    const binButton = document.createElement('button');
+    binButton.innerHTML = '<i class="fas fa-trash"></i>'
+    binButton.classList.add("bin-btn");
+    labelContainer.appendChild(binButton);
+
+    //Add label container to todoDiv
+    todoDiv.appendChild(labelContainer)
+
+    // Date due segment
+    const dueContainer = document.createElement('div');
+    dueContainer.classList.add("due-container");
+    dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
+    todoDiv.appendChild(dueContainer)
+
+    // Add todo to local storage
     saveLocalTodos(todoInput.value);
 
-     //Bin button
-     const binButton = document.createElement('button');
-     binButton.innerHTML = '<i class="fas fa-trash"></i>'
-     binButton.classList.add("bin-btn");
-     todoDiv.appendChild(binButton);
+    // Append to todo list
+    todoList.appendChild(todoDiv);
+    todoInput.value = "";
 
-     //Append to list
-     todoList.appendChild(todoDiv);
-     todoInput.value = "";
 }
 
 function deleteCheck(e) {
-    // prints what was clicked: console.log(e.target);
+    //console.log(e.target);
     const item = e.target;
     if (item.classList[0] === 'bin-btn') {
-        const todo = item.parentElement;
+        const todo = item.parentElement.parentElement;
         
         todo.classList.add("slide-out");
         removeLocalTodos(todo);
@@ -122,26 +136,40 @@ function getTodos() {
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo');
 
-        //Checkmark button
+        //Create label container
+        const labelContainer = document.createElement('div');
+        labelContainer.classList.add("label-container");
+
+        // Checkmark button
         const completedButton = document.createElement('button');
         completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
         completedButton.classList.add("complete-btn");
-        todoDiv.appendChild(completedButton);
-    
-        //Create li
+        labelContainer.appendChild(completedButton);
+
+        // Create li
         const newTodo = document.createElement('li');
         newTodo.innerText = todo;
         newTodo.classList.add('todo-item');
-        todoDiv.appendChild(newTodo);
-    
-         //Bin button
-         const binButton = document.createElement('button');
-         binButton.innerHTML = '<i class="fas fa-trash"></i>'
-         binButton.classList.add("bin-btn");
-         todoDiv.appendChild(binButton);
-    
-         //Append to list
-         todoList.appendChild(todoDiv);
+        labelContainer.appendChild(newTodo);
+
+        // Bin button
+        const binButton = document.createElement('button');
+        binButton.innerHTML = '<i class="fas fa-trash"></i>'
+        binButton.classList.add("bin-btn");
+        labelContainer.appendChild(binButton);
+
+        //Add label container to todoDiv
+        todoDiv.appendChild(labelContainer)
+
+        // Date due segment
+        const dueContainer = document.createElement('div');
+        dueContainer.classList.add("due-container");
+        dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
+        todoDiv.appendChild(dueContainer)
+
+        // Append to todo list
+        todoList.appendChild(todoDiv);
+        todoInput.value = "";
     });
 }
 
