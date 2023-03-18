@@ -23,13 +23,13 @@ function addTodo(event) {
     event.preventDefault();
 
     if(todoInput.value === null || todoInput.value === "") {
-        console.log(todoInput.value);
+        
     }
     else {
         // Todo div
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo');
-        //Create main todo container
+        // Create main todo container
         const todoMainContainer = document.createElement('div');
         todoMainContainer.classList.add("todo-main-container");
         // Checkmark button
@@ -64,7 +64,7 @@ function addTodo(event) {
         todoDiv.appendChild(dueContainer)
 
         // Add todo to local storage
-        saveLocalTodos(todoInput.value, "uncomplete", null);
+        saveLocalTodos(todoInput.value, "uncompleted", null);
 
         // Append to todo list
         todoList.appendChild(todoDiv);
@@ -109,11 +109,9 @@ function filterTodo(e) {
     todos.forEach(function(todo) {
             switch(e.target.value) {
             case "all":
-                console.log(todo.childNodes[0]);
                 todo.style.display = "flex";
                 break;
             case "completed":
-                console.log(todo.childNodes[0]);
                 if (todo.childNodes[0].classList.contains('completed')) {
                     todo.style.display = 'flex';
                 } else {
@@ -150,7 +148,6 @@ function findTodoIndex(todoText) {
 
     for (var i=0; i <= localTodos.length -1; i++) {
         if (localTodos[i][0] == todoText) {
-            console.log(i);
             return i
         }
     }
@@ -163,9 +160,7 @@ function updateLocalTodo(todoText, isComplete) {
     index = findTodoIndex(todoText);
     //Object.assign([], todos, {index: [todoText, isComplete, null]});
     todos[index][1] = isComplete;
-    console.log(todos);
     localStorage.setItem('todos', JSON.stringify(todos));
-    console.log(localTodos[index][1]);
 
 }
 
@@ -178,7 +173,6 @@ function getTodos() {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
     todos.forEach(function(todo) {
-        console.log(todo);
         // Todo div
         const todoDiv = document.createElement('div');
         todoDiv.classList.add('todo');
@@ -191,7 +185,12 @@ function getTodos() {
         }
         // Checkmark button
         const completedButton = document.createElement('button');
-        completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
+        if (todoMainContainer.classList[1] === "completed") {
+            completedButton.innerHTML = '<i class="fa-regular fa-circle-check"></i>';
+        }
+        else {
+            completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>';
+        }  
         completedButton.classList.add("complete-btn");
         todoMainContainer.appendChild(completedButton);
         // Create li
@@ -238,15 +237,13 @@ function removeLocalTodos(todo) {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
 
-    const todoIndex = (todo.children[0].innerText -1);
-    console.log(todoIndex);
-    console.log(todos);
-    todos.splice(todoIndex, 1)
+    index = findTodoIndex(todo.children[0].innerText);
+    console.log("todos",todos);
+    todos.splice(index, 1)
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function deleteAll() {
-    console.log("button pressed - remove all")
     const todos = document.querySelector('.todo-list')
 
     while (todos.lastElementChild) {
