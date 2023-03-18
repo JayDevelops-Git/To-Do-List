@@ -137,7 +137,7 @@ select {
     justify-content: center;
 }
 
-.fa-trash, .fa-circle, .fa-circle-check {
+.fa-trash, .fa-circle, .fa-circle-check, .fa-square-check {
     pointer-events: none;
 }
 

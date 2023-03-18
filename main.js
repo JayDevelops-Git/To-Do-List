@@ -4,7 +4,9 @@ const todoButton = document.querySelector('.todo-button');
 const todoList= document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 
-const deleteAllButton = document.querySelector('.delete-all-button')
+const deleteAllButton = document.querySelector('.delete-all-button');
+
+const dateInput = document.querySelector('.due-date-input');
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', getTodos)
@@ -13,7 +15,7 @@ todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck);
 filterOption.addEventListener('click', filterTodo);
 
-deleteAllButton.addEventListener('click', deleteAll)
+deleteAllButton.addEventListener('click', deleteAll);
 
 
 // Functions
@@ -72,7 +74,7 @@ function addTodo(event) {
     }
 }
 
-// Functions of the delete and complete buttons
+// Functions of the delete, complete and date apply buttons
 function deleteCheck(e) {
     //console.log(e.target);
     const item = e.target;
@@ -87,7 +89,7 @@ function deleteCheck(e) {
         });
     }
 
-    //Complete button functionality
+    // Complete button functionality
     if (item.classList[0] === "complete-btn") {
         const todo = item.parentElement;
         todo.classList.toggle("completed");
@@ -101,6 +103,15 @@ function deleteCheck(e) {
             updateLocalTodo(todo.childNodes[1].innerText,"uncompleted");
         }
         
+    }
+
+    // Apply date button functionality
+    if(item.classList[0] === "due-btn") {
+        const dueContainer = item.parentElement;
+        const dueDate = dueContainer.childNodes[0].value;
+        const todoText = dueContainer.parentElement.childNodes[0].childNodes[1].innerText;
+
+        updateLocalTodo(todoText, dueDate);
     }
 }
 
@@ -153,15 +164,20 @@ function findTodoIndex(todoText) {
     }
 }
 
-// Updates the todos array in local storage to state whether a today is completed
-function updateLocalTodo(todoText, isComplete) {
+// Updates the todos array in local storage to either state whether a todo is completed, or apply a due date
+function updateLocalTodo(todoText, updateValue) {
     todos = JSON.parse(localStorage.getItem('todos'));
 
     index = findTodoIndex(todoText);
-    //Object.assign([], todos, {index: [todoText, isComplete, null]});
-    todos[index][1] = isComplete;
-    localStorage.setItem('todos', JSON.stringify(todos));
+    if (updateValue === "completed" || updateValue === "uncompleted") {
+        todos[index][1] = updateValue;
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
 
+    else {
+        todos[index][2] = updateValue;
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
 }
 
 function getTodos() {
@@ -210,7 +226,12 @@ function getTodos() {
         const dueContainer = document.createElement('div');
         dueContainer.classList.add("due-container");
         // Date input
-        dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
+        dueContainer.innerHTML = '<input type="date" class="due-date-input">';
+        if (todo[2] !== "" || todo[2] !== null) {
+            console.log("yo");
+            dueContainer.innerHTML = '<input type="date" class="due-date-input" value="'+todo[2]+'">';
+        }
+        
         // Due confirm
         const dueButton = document.createElement('button');
         dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>'
@@ -223,7 +244,8 @@ function getTodos() {
         todoList.appendChild(todoDiv);
         todoInput.value = "";
 
-
+        // Update due date if necessary
+        
 
     });
 }
