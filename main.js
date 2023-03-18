@@ -4,12 +4,16 @@ const todoButton = document.querySelector('.todo-button');
 const todoList= document.querySelector('.todo-list');
 const filterOption = document.querySelector('.filter-todo');
 
+const deleteAllButton = document.querySelector('.delete-all-button')
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', getTodos)
 
 todoButton.addEventListener('click', addTodo);
 todoList.addEventListener('click', deleteCheck);
 filterOption.addEventListener('click', filterTodo);
+
+deleteAllButton.addEventListener('click', deleteAll)
 
 
 // Functions
@@ -154,4 +158,19 @@ function removeLocalTodos(todo) {
     todos.splice(todos.indexOf(todoIndex), 1)
     localStorage.setItem("todos", JSON.stringify(todos));
 
+}
+
+function deleteAll() {
+    console.log("button pressed - remove all")
+    const todos = document.querySelector('.todo-list')
+
+    while (todos.lastElementChild) {
+        todos.removeChild(todos.lastElementChild)
+    }
+    removeAllLocalTodos();
+    
+}
+
+function removeAllLocalTodos() {
+    localStorage.removeItem('todos');
 }

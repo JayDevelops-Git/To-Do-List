@@ -21,6 +21,7 @@ body {
     --primary-color: #18122B;
     --secondary-color: #393053;
     --text-color: #FFFFFF;
+    --text-hover-color: #d5d5d5;
     --accent-color: #635985;
     --hover-color: #443C68;
 }
@@ -38,6 +39,16 @@ button {
     border: none;
     background: none;
     cursor: pointer;
+}
+
+.misc button {
+    padding: 0.5rem 2rem;
+    background: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.misc button:hover {
+    background: var(--hover-color);
 }
 
 form {
@@ -104,6 +115,7 @@ select {
 
 .todo-list {
     list-style-type: none;
+    margin-top: 5vh;
 }
 
 
@@ -112,7 +124,7 @@ select {
 .todo {
     display: flex;
     background: var(--secondary-color) ;
-    font-size: 1.2vw;
+    font-size: 2rem;
     margin: 1vh 1vw;
 
     justify-content: space-between;
@@ -127,6 +139,10 @@ select {
     color: var(--text-color);
 }
 
+.complete-btn:hover, .bin-btn:hover {
+    color: var(--text-hover-color)
+}
+
 .completed {
     text-decoration: line-through;
     opacity: 0.5;
@@ -134,6 +150,6 @@ select {
 }
 
 .slide-out {
-    transform: translateX(100vw);
-    transition: all 0.5s ease;
+    opacity: 0;
+    transition: all 0.4s ease;
 }
