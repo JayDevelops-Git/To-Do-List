@@ -21,51 +21,55 @@ deleteAllButton.addEventListener('click', deleteAll)
 // Anything added here must also be added to getTodos() for local storage
 function addTodo(event) {
     event.preventDefault();
-    
-    // Todo div
-    const todoDiv = document.createElement('div');
-    todoDiv.classList.add('todo');
-    //Create main todo container
-    const todoMainContainer = document.createElement('div');
-    todoMainContainer.classList.add("todo-main-container");
-    // Checkmark button
-    const completedButton = document.createElement('button');
-    completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
-    completedButton.classList.add("complete-btn");
-    todoMainContainer.appendChild(completedButton);
-    // Create li
-    const newTodo = document.createElement('li');
-    newTodo.innerText = todoInput.value;
-    newTodo.classList.add('todo-item');
-    todoMainContainer.appendChild(newTodo);
-    // Bin button
-    const binButton = document.createElement('button');
-    binButton.innerHTML = '<i class="fas fa-trash"></i>'
-    binButton.classList.add("bin-btn");
-    todoMainContainer.appendChild(binButton);
-    //Add main todo container to todoDiv
-    todoDiv.appendChild(todoMainContainer)
 
-    // Date due container
-    const dueContainer = document.createElement('div');
-    dueContainer.classList.add("due-container");
-    // Date input
-    dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
-    // Due confirm
-    const dueButton = document.createElement('button');
-    dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>'
-    dueButton.classList.add("due-btn");
-    dueContainer.appendChild(dueButton);
-    //Add due container to todoDiv
-    todoDiv.appendChild(dueContainer)
+    if(todoInput.value === null || todoInput.value === "") {
+        console.log(todoInput.value);
+    }
+    else {
+        // Todo div
+        const todoDiv = document.createElement('div');
+        todoDiv.classList.add('todo');
+        //Create main todo container
+        const todoMainContainer = document.createElement('div');
+        todoMainContainer.classList.add("todo-main-container");
+        // Checkmark button
+        const completedButton = document.createElement('button');
+        completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
+        completedButton.classList.add("complete-btn");
+        todoMainContainer.appendChild(completedButton);
+        // Create li
+        const newTodo = document.createElement('li');
+        newTodo.innerText = todoInput.value;
+        newTodo.classList.add('todo-item');
+        todoMainContainer.appendChild(newTodo);
+        // Bin button
+        const binButton = document.createElement('button');
+        binButton.innerHTML = '<i class="fas fa-trash"></i>'
+        binButton.classList.add("bin-btn");
+        todoMainContainer.appendChild(binButton);
+        //Add main todo container to todoDiv
+        todoDiv.appendChild(todoMainContainer)
 
-    // Add todo to local storage
-    saveLocalTodos(todoInput.value);
+        // Date due container
+        const dueContainer = document.createElement('div');
+        dueContainer.classList.add("due-container");
+        // Date input
+        dueContainer.innerHTML = '<input type="date" class="due-date-input" name="due">'
+        // Due confirm
+        const dueButton = document.createElement('button');
+        dueButton.innerHTML = '<i class="fa-regular fa-square-check"></i>'
+        dueButton.classList.add("due-btn");
+        dueContainer.appendChild(dueButton);
+        //Add due container to todoDiv
+        todoDiv.appendChild(dueContainer)
 
-    // Append to todo list
-    todoList.appendChild(todoDiv);
-    todoInput.value = "";
+        // Add todo to local storage
+        saveLocalTodos(todoInput.value);
 
+        // Append to todo list
+        todoList.appendChild(todoDiv);
+        todoInput.value = "";
+    }
 }
 
 function deleteCheck(e) {
@@ -102,17 +106,19 @@ function filterTodo(e) {
     todos.forEach(function(todo) {
             switch(e.target.value) {
             case "all":
+                console.log(todo.childNodes[0]);
                 todo.style.display = "flex";
                 break;
             case "completed":
-                if (todo.classList.contains('completed')) {
+                console.log(todo.childNodes[0]);
+                if (todo.childNodes[0].classList.contains('completed')) {
                     todo.style.display = 'flex';
                 } else {
                     todo.style.display = "none";
                 }
                 break;
             case "uncompleted":
-                if (todo.classList.contains('completed')){
+                if (todo.childNodes[0].classList.contains('completed')){
                     todo.style.display = 'none';
                 }
                 else{
@@ -154,9 +160,7 @@ function getTodos() {
         const completedButton = document.createElement('button');
         completedButton.innerHTML = '<i class="fa-regular fa-circle"></i>'
         completedButton.classList.add("complete-btn");
-        todoMainContainer.appendChild(
-            
-            item.repalceWithcompletedButton);
+        todoMainContainer.appendChild(completedButton);
         // Create li
         const newTodo = document.createElement('li');
         newTodo.innerText = todo;
@@ -201,7 +205,6 @@ function removeLocalTodos(todo) {
     const todoIndex = todo.children[0].innerText;
     todos.splice(todos.indexOf(todoIndex), 1)
     localStorage.setItem("todos", JSON.stringify(todos));
-
 }
 
 function deleteAll() {
@@ -211,10 +214,10 @@ function deleteAll() {
     while (todos.lastElementChild) {
         todos.removeChild(todos.lastElementChild)
     }
-    removeAllLocalTodos();
-    
+    removeAllLocalTodos(); 
 }
 
 function removeAllLocalTodos() {
     localStorage.removeItem('todos');
 }
+

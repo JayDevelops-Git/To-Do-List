@@ -42,7 +42,7 @@ button {
 }
 
 .misc button {
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 0.5rem;
     background: var(--secondary-color);
     color: var(--text-color);
 }
@@ -127,6 +127,7 @@ select {
     background: var(--secondary-color) ;
     font-size: 2rem;
     margin: 1vh 1vw;
+    min-width: 10rem;
 
     justify-content: space-between;
 }
