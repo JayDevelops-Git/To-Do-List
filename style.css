@@ -131,12 +131,12 @@ select {
     justify-content: space-between;
 }
 
-.label-container {
+.todo-main-container {
     display: flex;
     justify-content: center;
 }
 
-.fa-trash, .fa-circle {
+.fa-trash, .fa-circle, .fa-circle-check {
     pointer-events: none;
 }
 
@@ -159,6 +159,15 @@ select {
     background: none;
     border-style: none;
     color: var(--text-color);
+}
+
+.due-btn {
+    padding-left: 0.5rem;
+    color: var(--text-color);
+}
+
+.due-btn:hover {
+    color: var(--text-hover-color);
 }
 
 .completed {
